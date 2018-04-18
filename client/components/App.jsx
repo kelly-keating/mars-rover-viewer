@@ -1,31 +1,45 @@
 import React from 'react'
 
-import {getFruits} from '../apiClient'
+import {getImage} from '../apiClient'
 
 class App extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      fruits: []
+      picture: {
+        img_src: 'http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/00000/opgs/edr/fcam/FRA_397506083EDR_F0010008AUT_04096M_.JPG'
+      },
+      solDate: 1000,
+      camera: 'fhaz'
     }
+    this.increaseDay = this.increaseDay.bind(this)
   }
 
   componentDidMount () {
-    getFruits()
-      .then(fruits => {
-        this.setState({fruits})
+    this.refreshImage()
+  }
+
+  refreshImage () {
+    getImage(this.state.solDate)
+      .then(picture => {
+        this.setState({
+          picture: picture
+        })
       })
+  }
+
+  increaseDay() {
+    this.setState({
+      solDate: this.state.solDate+1
+    })
+    this.refreshImage()
   }
 
   render () {
     return (
       <div className='app'>
-        <h1>Fullstack Boilerplate</h1>
-        <ul>
-          {this.state.fruits.map(fruit => (
-            <li key={fruit}>{fruit}</li>
-          ))}
-        </ul>
+        <h1 onClick={this.increaseDay}>Roving</h1>
+        {this.state.picture ? <img id='pic' src={this.state.picture.img_src} /> : <p>DAY MISSING</p>}
       </div>
     )
   }
