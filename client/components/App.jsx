@@ -35,11 +35,17 @@ class App extends React.Component {
     this.refreshImage()
   }
 
+  renderContent() {
+    return(
+      this.state.picture ? <img id='pic' src={this.state.picture.img_src} /> : <p>[DAY MISSING]</p>
+    )
+  }
+
   render () {
     return (
       <div className='app'>
-        <h1 onClick={this.increaseDay}>Roving</h1>
-        {this.state.picture ? <img id='pic' src={this.state.picture.img_src} /> : <p>DAY MISSING</p>}
+        <div id='date'>{this.state.solDate}</div>
+        <div id='link' onClick={this.increaseDay}>{this.renderContent()}</div>
       </div>
     )
   }
