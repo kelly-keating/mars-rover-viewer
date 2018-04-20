@@ -7,9 +7,9 @@ class App extends React.Component {
     super(props)
     this.state = {
       picture: {
-        img_src: 'http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/00000/opgs/edr/fcam/FRA_397506083EDR_F0010008AUT_04096M_.JPG'
+        img_src: 'http://mars.jpl.nasa.gov/msl-raw-images/proj/msl/redops/ods/surface/sol/00000/opgs/edr/fcam/FRA_397502305EDR_D0010000AUT_04096M_.JPG'
       },
-      solDate: 1000,
+      solDate: 0,
       camera: 'fhaz'
     }
     this.increaseDay = this.increaseDay.bind(this)
@@ -22,9 +22,11 @@ class App extends React.Component {
   refreshImage () {
     getImage(this.state.solDate)
       .then(picture => {
-        this.setState({
-          picture: picture
-        })
+        if(picture) {
+          this.setState({
+            picture: picture
+          })
+        }
       })
   }
 
@@ -33,6 +35,11 @@ class App extends React.Component {
       solDate: this.state.solDate+1
     })
     this.refreshImage()
+  }
+
+  rotateCamera(){
+    // Create ability to view multiple cameras.
+    // Will involve changing the state setup
   }
 
   renderContent() {

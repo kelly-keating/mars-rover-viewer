@@ -7,6 +7,7 @@ const nasaKey = '&api_key=RHpVzzSLOU4DXoxv4wNQXSLqBORvpMrNzLq9V4Ub'
 export function getImage (day) {
   return request.get(rootUrl + day + '&camera=fhaz' + nasaKey)
     .then(res => {
+      console.log(res.body.photos);
       return res.body.photos[0]
     })
 }
